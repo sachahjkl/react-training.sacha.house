@@ -17,8 +17,8 @@ export default function Todo({ defaultTodos }: TodoProps) {
     defaultTodos.map((t) => ({
       id: idCount++,
       label: t,
-      done: false,
-    })) || [],
+      done: false
+    })) || []
   );
 
   const addTodo = (todoLabel: string) => {
@@ -63,7 +63,11 @@ export default function Todo({ defaultTodos }: TodoProps) {
                 name="done"
                 checked={todo.done}
                 onChange={() =>
-                  setTodos(todos.map((t) => (t.id !== todo.id ? t : { ...t, done: !t.done })))
+                  setTodos(
+                    todos.map((t) =>
+                      t.id !== todo.id ? t : { ...t, done: !t.done }
+                    )
+                  )
                 }
                 key={todo.id}
                 className="mr-2"

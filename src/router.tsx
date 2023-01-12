@@ -1,4 +1,8 @@
-import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements
+} from 'react-router-dom';
 
 import Error from 'pages/Error';
 import Layout from 'pages/Layout';
@@ -11,7 +15,7 @@ import { route } from 'react-router-typesafe-routes/dom';
 export const routes = {
   home: route('', {}),
   todo: route('todo'),
-  about: route('about'),
+  about: route('about')
 };
 
 export type RoutesType = typeof routes;
@@ -26,21 +30,6 @@ export default createBrowserRouter(
       <Route path={routes.home.path} element={<Index />} />
       <Route path={routes.todo.path} element={<Todo />} />
       <Route path={routes.about.path} element={<About />} />
-    </Route>,
-  ),
+    </Route>
+  )
 );
-//   {
-//     path: '/',
-//     element: <Layout />,
-//     index: true,
-//     children: [
-//       {
-
-//       }
-//     ]
-//   },
-//   {
-//     path: '/todo',
-//     element: <Todo />,
-//   },
-// ]);

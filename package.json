@@ -14,8 +14,7 @@
     "serve": "vite preview",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write .",
-    "typecheck": "tsc --project tsconfig.json --noEmit",
-    "preview": "vite preview"
+    "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
     "localforage": "^1.10.0",

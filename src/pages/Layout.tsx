@@ -4,9 +4,13 @@ import { Suspense } from 'react';
 import { routes } from 'router';
 
 const Loading = (
-  <h1>
-    <span className="animate-spin">⌛</span> Loading...
-  </h1>
+  <article className="p-4">
+    <section className="prose mx-auto mt-4 rounded-lg border bg-white p-6 shadow-sm">
+      <h1>
+        <span className="animate-spin">⌛</span> Loading...
+      </h1>
+    </section>
+  </article>
 );
 
 const Layout = () => {

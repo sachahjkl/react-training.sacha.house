@@ -8,7 +8,8 @@ interface NavProps {
   routes: RoutesType;
 }
 export default function Nav({ routes }: NavProps) {
-  const classNameNavItem = 'inline-block font-bold transition-transform hover:scale-110';
+  const classNameNavItem =
+    'inline-block font-bold transition-transform hover:scale-110';
 
   const activeNavClasses = ({ isActive }: { isActive: boolean }) =>
     `transition-all ${isActive ? 'underline' : ''}` as const;
@@ -26,14 +27,16 @@ export default function Nav({ routes }: NavProps) {
             <h1 className="text-lg font-bold"> React Training</h1>
           </Link>
         </li>
-        {(Object.entries(routes) as Entries<typeof routes>).map(([label, route]) => (
-          <li key={label} className={classNameNavItem}>
-            {navBindings[label] || ''}
-            <NavLink to={route.path} className={activeNavClasses}>
-              {capitalize(label)}
-            </NavLink>
-          </li>
-        ))}
+        {(Object.entries(routes) as Entries<typeof routes>).map(
+          ([label, route]) => (
+            <li key={label} className={classNameNavItem}>
+              {navBindings[label] || ''}
+              <NavLink to={route.path} className={activeNavClasses}>
+                {capitalize(label)}
+              </NavLink>
+            </li>
+          )
+        )}
       </ul>
     </nav>
   );
