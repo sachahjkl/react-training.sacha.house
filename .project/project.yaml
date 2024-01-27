@@ -1,0 +1,10 @@
+name: "react-training.sacha.house"
+description: "https://react-training.sacha.house - React demo and training"
+topics:
+  - "react"
+  - "typescript"
+homepage: ""
+source:
+  provider: gitlab
+  namespace: "sachahjkl"
+  path: "sachahjkl/react-training.sacha.house"
