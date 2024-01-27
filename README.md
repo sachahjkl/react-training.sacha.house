@@ -1,5 +1,3 @@
-[English](README.md) | [Français](README.fr.md)
-
 # 🚧 React-Training
 
 This is a demo project using **Vite**, **Typescript**, **TailwindCSS**, **React Router V6**, **Eslint** + **Prettier** and **PNPM**.
