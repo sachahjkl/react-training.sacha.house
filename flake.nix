@@ -2,7 +2,7 @@
   description = "react-training.sacha.house static website";
 
   nixConfig = {
-    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-substituters = ["https://nix-community.cachix.org"];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
@@ -17,16 +17,14 @@
     };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      flake-utils,
-      git-hooks,
-      ...
-    }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-linux" ] (
-      system:
-      let
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    git-hooks,
+    ...
+  }:
+    flake-utils.lib.eachSystem ["x86_64-linux" "aarch64-linux"] (
+      system: let
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfreePredicate = package: nixpkgs.lib.getName package == "nomad";
@@ -36,7 +34,7 @@
         pname = "react-training-sacha-house";
         inherit (packageJson) version;
         nodejs = pkgs.nodejs_22;
-        pnpm = pkgs.pnpm.override { nodejs-slim = nodejs; };
+        pnpm = pkgs.pnpm.override {nodejs-slim = nodejs;};
         src = lib.cleanSource ./.;
         pnpmDeps = pkgs.fetchPnpmDeps {
           inherit
@@ -60,7 +58,7 @@
             pkgs.pnpmConfigHook
             pnpm
           ];
-          pnpmInstallFlags = [ "--frozen-lockfile" ];
+          pnpmInstallFlags = ["--frozen-lockfile"];
           buildPhase = ''
             runHook preBuild
             pnpm run build
@@ -74,7 +72,7 @@
         };
         server = pkgs.writeShellApplication {
           name = pname;
-          runtimeInputs = [ pkgs.busybox ];
+          runtimeInputs = [pkgs.busybox];
           text = ''
             exec httpd -f -p 3000 -h ${site}
           '';
@@ -82,10 +80,10 @@
         dockerImage = pkgs.dockerTools.buildLayeredImage {
           name = "react-training.sacha.house";
           tag = version;
-          contents = [ server ];
+          contents = [server];
           config = {
-            Cmd = [ "${server}/bin/${pname}" ];
-            ExposedPorts."3000/tcp" = { };
+            Cmd = ["${server}/bin/${pname}"];
+            ExposedPorts."3000/tcp" = {};
             User = "65532:65532";
           };
         };
@@ -97,22 +95,21 @@
             check-added-large-files.enable = true;
             check-json = {
               enable = true;
-              excludes = [ "^tsconfig.*\\.json$" ];
+              excludes = ["^tsconfig.*\\.json$"];
             };
             check-merge-conflicts.enable = true;
             end-of-file-fixer.enable = true;
-            nixfmt.enable = true;
+            alejandra.enable = true;
             trim-trailing-whitespace.enable = true;
           };
         };
-        nomadJobs = pkgs.runCommand "${pname}-nomad-jobs" { nativeBuildInputs = [ pkgs.nomad ]; } ''
+        nomadJobs = pkgs.runCommand "${pname}-nomad-jobs" {nativeBuildInputs = [pkgs.nomad];} ''
           image="ghcr.io/sachahjkl/react-training.sacha.house@sha256:0000000000000000000000000000000000000000000000000000000000000000"
           nomad job validate -var "image=$image" ${./deploy/nomad/staging.nomad.hcl}
           nomad job validate -var "image=$image" ${./deploy/nomad/production.nomad.hcl}
           touch "$out"
         '';
-      in
-      {
+      in {
         packages = {
           default = site;
           inherit dockerImage;
@@ -122,13 +119,14 @@
           inherit dockerImage nomadJobs;
           pre-commit = preCommitCheck;
         };
-        formatter = pkgs.nixfmt;
+        formatter = pkgs.alejandra;
         devShells.default = pkgs.mkShell {
-          packages = [
-            nodejs
-            pnpm
-          ]
-          ++ preCommitCheck.enabledPackages;
+          packages =
+            [
+              nodejs
+              pnpm
+            ]
+            ++ preCommitCheck.enabledPackages;
           inherit (preCommitCheck) shellHook;
         };
       }
