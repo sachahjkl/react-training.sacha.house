@@ -103,28 +103,6 @@
             trim-trailing-whitespace.enable = true;
           };
         };
-        nomadJobs = pkgs.runCommand "react-training-sacha-house-nomad-jobs" {nativeBuildInputs = [pkgs.nomad pkgs.nomad-pack];} ''
-          export HOME="$TMPDIR"
-          image="ghcr.io/sachahjkl/react-training.sacha.house@sha256:0000000000000000000000000000000000000000000000000000000000000000"
-          for environment in staging production; do
-            cat > "$TMPDIR/$environment.vars.hcl" <<EOFVARS
-          name = "react-training-sacha-house"
-          domain = "example.sacha.house"
-          environment = "$environment"
-          health_path = "/"
-          image = "$image"
-          port = 3000
-          service_tags = []
-          volume_enabled = false
-          volume_mount_path = ""
-          volume_name = ""
-          EOFVARS
-            nomad-pack render ${./deploy} --var-file "$TMPDIR/$environment.vars.hcl" \
-              --to-dir "$TMPDIR/$environment" --auto-approve >/dev/null
-            nomad job validate "$TMPDIR/$environment/application/application.nomad"
-          done
-          touch "$out"
-        '';
       in {
         packages = {
           default = site;
@@ -132,7 +110,7 @@
         };
         checks = {
           build = site;
-          inherit dockerImage nomadJobs;
+          inherit dockerImage;
           pre-commit = preCommitCheck;
         };
         formatter = pkgs.alejandra;

@@ -3,6 +3,13 @@ application:
   port: 3000
   healthPath: /
 
-domain:
-  production: react-training.sacha.house
-  staging: staging.react-training.sacha.house
+environments:
+  staging:
+    domain: staging.react-training.sacha.house
+    noIndex: true
+  production:
+    domain: react-training.sacha.house
+
+resources:
+  cpu: 200
+  memory: 128
