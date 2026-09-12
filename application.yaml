@@ -1,0 +1,8 @@
+application:
+  name: react-training-sacha-house
+  port: 3000
+  healthPath: /
+
+domain:
+  production: react-training.sacha.house
+  staging: staging.react-training.sacha.house
