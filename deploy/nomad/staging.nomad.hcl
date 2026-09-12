@@ -68,7 +68,7 @@ job "react-training-sacha-house" {
         port     = "http"
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.react-training-sacha-house-staging.entrypoints=nomad",
+          "traefik.http.routers.react-training-sacha-house-staging.entrypoints=websecure",
           "traefik.http.routers.react-training-sacha-house-staging.middlewares=react-training-sacha-house-staging-noindex",
           "traefik.http.routers.react-training-sacha-house-staging.rule=Host(`staging.react-training.sacha.house`)",
           "traefik.http.routers.react-training-sacha-house-staging.tls.domains[0].main=staging.react-training.sacha.house",
