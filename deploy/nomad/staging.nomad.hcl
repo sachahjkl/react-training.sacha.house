@@ -68,6 +68,13 @@ job "react-training-sacha-house" {
         name     = "react-training-sacha-house-staging"
         provider = "nomad"
         port     = "http"
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.react-training-sacha-house-staging.entrypoints=nomad",
+          "traefik.http.routers.react-training-sacha-house-staging.middlewares=react-training-sacha-house-staging-noindex",
+          "traefik.http.routers.react-training-sacha-house-staging.rule=Host(`staging.react-training.sacha.house`)",
+          "traefik.http.middlewares.react-training-sacha-house-staging-noindex.headers.customresponseheaders.X-Robots-Tag=noindex, nofollow",
+        ]
 
         check {
           name     = "HTTP health"
